@@ -1,9 +1,8 @@
 package us.fiestaboleana.programaciondos.days.one;
 
 import us.fiestaboleana.java.libraries.PanelLib;
-import us.fiestaboleana.programaciondos.objects.Displayable;
 
-public abstract class Persona implements Displayable {
+public abstract class Persona {
 
     private String cedula, nombre, apellidos, direccion;
 
@@ -15,7 +14,6 @@ public abstract class Persona implements Displayable {
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.direccion = direccion;
-        display();
     }
 
     public String getCedula() {
@@ -48,19 +46,6 @@ public abstract class Persona implements Displayable {
 
     public void setDireccion(String direccion) {
         this.direccion = direccion;
-    }
-
-    @Override
-    public String getInfo() {
-        return "Cedula: "+getCedula()+"\n"+
-                "Nombre: "+getNombre()+"\n"+
-                "Apellidos: "+getApellidos()+"\n"+
-                "Direccion: "+getDireccion()+"\n";
-    }
-
-    @Override
-    public void display() {
-        PanelLib.showMessage("Persona - Resultado", getInfo());
     }
 
     public String conocer(PrintType print){
