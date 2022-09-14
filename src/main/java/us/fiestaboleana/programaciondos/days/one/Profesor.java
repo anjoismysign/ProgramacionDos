@@ -1,8 +1,10 @@
 package us.fiestaboleana.programaciondos.days.one;
 
 import us.fiestaboleana.java.libraries.PanelLib;
-import us.fiestaboleana.java.libraries.SwingLib;
-import us.fiestaboleana.java.objects.AnjoComponent;
+import us.fiestaboleana.java.objects.DoubleResult;
+import us.fiestaboleana.java.objects.IntegerResult;
+import us.fiestaboleana.java.swing.AnjoComponent;
+import us.fiestaboleana.java.swing.AnjoPane;
 import us.fiestaboleana.programaciondos.objects.Displayable;
 
 import javax.swing.*;
@@ -32,38 +34,25 @@ public class Profesor extends Persona implements Displayable {
         components.add(new AnjoComponent("Código", new JTextField(20)));
         components.add(new AnjoComponent("Salario", new JTextField(9)));
         components.add(new AnjoComponent("Cantidad de cursos", new JTextField(2)));
-        JPanel panel = SwingLib.anjoPane(components, "Profesor", 2, -1, 0);
-        String cedula = SwingLib.getTextFromAnjoJTextField(panel, 0);
-        String nombre = SwingLib.getTextFromAnjoJTextField(panel, 1);
-        String apellidos = SwingLib.getTextFromAnjoJTextField(panel, 2);
-        String direccion = SwingLib.getTextFromAnjoJTextField(panel, 3);
-        String codigo = SwingLib.getTextFromAnjoJTextField(panel, 4);
-        boolean salarioFailed = false;
-        boolean cursosImpartidosFailed = false;
-        double salario;
-        try{
-            salario = Double.parseDouble(SwingLib.getTextFromAnjoJTextField(panel, 5));
-        } catch (NumberFormatException e) {
-            salario = 0;
-            salarioFailed = true;
-        }
-        int cursosImpartidos;
-        try{
-            cursosImpartidos = Integer.parseInt(SwingLib.getTextFromAnjoJTextField(panel, 6));
-        } catch (NumberFormatException e) {
-            cursosImpartidos = 0;
-            cursosImpartidosFailed = true;
-        }
-        if (salarioFailed){
-            PanelLib.showMessage("ERROR", "La cantidad de materias debe ser un número entero");
-        }
-        if (cursosImpartidosFailed){
-            PanelLib.showMessage("ERROR", "El cuatrimestre debe ser un número entero");
-        }
-        if (salarioFailed || cursosImpartidosFailed){
+        AnjoPane pane = AnjoPane.build(components, "PROFESOR - NUEVO", 0, -1);
+        String cedula = pane.getTextFieldText(0);
+        String nombre = pane.getTextFieldText(1);
+        String apellidos = pane.getTextFieldText(2);
+        String direccion = pane.getTextFieldText(3);
+        String codigo = pane.getTextFieldText(4);
+        DoubleResult salarioResult = pane.getDouble(5);
+        IntegerResult cursosResult = pane.getInteger(6);
+
+        boolean salarioFailed = !salarioResult.isValid();
+        boolean cursosFailed = !cursosResult.isValid();
+        if (salarioFailed || cursosFailed){
+            if (salarioFailed)
+                PanelLib.showMessage("ERROR", "El salario se debe expresar como un número entero o decimal");
+            if (cursosFailed)
+                PanelLib.showMessage("ERROR", "Cantidad de cursos no es un número entero");
             return Profesor.build();
         }
-        return new Profesor(cedula,nombre,apellidos,direccion, codigo, salario, cursosImpartidos);
+        return new Profesor(cedula,nombre,apellidos,direccion, codigo, salarioResult.value(), cursosResult.value());
     }
 
     public Profesor(){}
@@ -105,7 +94,7 @@ public class Profesor extends Persona implements Displayable {
 
     @Override
     public void display() {
-        PanelLib.showMessage("Profesor - Resultado", getInfo());
+        PanelLib.showMessage("PROFESOR - RESULTADO", getInfo());
     }
 
     public String educar(String curso, PrintType print){

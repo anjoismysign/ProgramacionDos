@@ -8,8 +8,7 @@
     <maven.compiler.source>16</maven.compiler.source>
     <maven.compiler.target>16</maven.compiler.target>
   </properties>
-  <name>Archetype - ProgramacionDos</name>
-  <url>http://maven.apache.org</url>
+  <name>ProgramacionDos</name>
 
 
   <repositories>
@@ -23,7 +22,7 @@
     <dependency>
       <groupId>com.github.anjoismysign</groupId>
       <artifactId>UlatinaJava</artifactId>
-      <version>1.0.16</version>
+      <version>1.0.18</version>
     </dependency>
   </dependencies>
 </project>
