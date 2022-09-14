@@ -1,7 +1,7 @@
 package us.fiestaboleana.programaciondos;
 
+import us.fiestaboleana.java.libraries.AlgorithmLib;
 import us.fiestaboleana.programaciondos.days.one.Estudiante;
-import us.fiestaboleana.programaciondos.days.one.Util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,14 +9,15 @@ import java.util.List;
 public class ProgramacionDos {
 
     public static void main(String[] args){
-        List<Estudiante> estudiantes = new ArrayList<>();
-        boolean next = true;
-        while (next){
-            estudiantes.add(Estudiante.build());
-            next = Util.continuar();
-        }
-        estudiantes.parallelStream().forEach(estudiante -> {
-            estudiante.display();
-        });
+        Estudiante estudiante = Estudiante.build();
+        estudiante.display();
+//        List<Estudiante> estudiantes = new ArrayList<>();
+//        AlgorithmLib.dynamicRun(()->{
+//            estudiantes.add(Estudiante.build());
+//        },"ULATINA","¿Desea ingresar otro estudiante?");
+//        System.out.println(estudiantes.size());
+//        estudiantes.parallelStream().forEach(estudiante -> {
+//            estudiante.display();
+//        });
     }
 }

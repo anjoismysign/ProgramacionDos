@@ -1,7 +1,13 @@
 package us.fiestaboleana.programaciondos.days.one;
 
 import us.fiestaboleana.java.libraries.PanelLib;
+import us.fiestaboleana.java.libraries.SwingLib;
+import us.fiestaboleana.java.objects.AnjoComponent;
 import us.fiestaboleana.programaciondos.objects.Displayable;
+
+import javax.swing.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Profesor extends Persona implements Displayable {
 
@@ -18,13 +24,45 @@ public class Profesor extends Persona implements Displayable {
     }
 
     public static Profesor build(){
-        String cedula = PanelLib.requestString("Profesor","Ingrese cedula");
-        String nombre = PanelLib.requestString("Profesor","Ingrese nombre");
-        String apellidos = PanelLib.requestString("Profesor","Ingrese apellidos");
-        String direccion = PanelLib.requestString("Profesor","Ingrese direccion");
-        String codigo = PanelLib.requestString("Profesor", "Ingrese código");
-        double salario = PanelLib.requestDouble("¿Cuánto es el salario? Sin restar los impuestos");
-        int cursosImpartidos = PanelLib.requestInteger("¿Cuántos cursos va a impartir este cuatrimestre?");
+        List<AnjoComponent> components = new ArrayList<>();
+        components.add(new AnjoComponent("Cedula", new JTextField(20)));
+        components.add(new AnjoComponent("Nombre", new JTextField(20)));
+        components.add(new AnjoComponent("Apellidos", new JTextField(20)));
+        components.add(new AnjoComponent("Direccion", new JTextField(20)));
+        components.add(new AnjoComponent("Código", new JTextField(20)));
+        components.add(new AnjoComponent("Salario", new JTextField(9)));
+        components.add(new AnjoComponent("Cantidad de cursos", new JTextField(2)));
+        JPanel panel = SwingLib.anjoPane(components, "Profesor", 2, -1, 0);
+        String cedula = SwingLib.getTextFromAnjoJTextField(panel, 0);
+        String nombre = SwingLib.getTextFromAnjoJTextField(panel, 1);
+        String apellidos = SwingLib.getTextFromAnjoJTextField(panel, 2);
+        String direccion = SwingLib.getTextFromAnjoJTextField(panel, 3);
+        String codigo = SwingLib.getTextFromAnjoJTextField(panel, 4);
+        boolean salarioFailed = false;
+        boolean cursosImpartidosFailed = false;
+        double salario;
+        try{
+            salario = Double.parseDouble(SwingLib.getTextFromAnjoJTextField(panel, 5));
+        } catch (NumberFormatException e) {
+            salario = 0;
+            salarioFailed = true;
+        }
+        int cursosImpartidos;
+        try{
+            cursosImpartidos = Integer.parseInt(SwingLib.getTextFromAnjoJTextField(panel, 6));
+        } catch (NumberFormatException e) {
+            cursosImpartidos = 0;
+            cursosImpartidosFailed = true;
+        }
+        if (salarioFailed){
+            PanelLib.showMessage("ERROR", "La cantidad de materias debe ser un número entero");
+        }
+        if (cursosImpartidosFailed){
+            PanelLib.showMessage("ERROR", "El cuatrimestre debe ser un número entero");
+        }
+        if (salarioFailed || cursosImpartidosFailed){
+            return Profesor.build();
+        }
         return new Profesor(cedula,nombre,apellidos,direccion, codigo, salario, cursosImpartidos);
     }
 

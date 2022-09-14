@@ -5,8 +5,8 @@
   <artifactId>ProgramacionDos</artifactId>
   <version>1.0</version>
   <properties>
-    <maven.compiler.source>18</maven.compiler.source>
-    <maven.compiler.target>18</maven.compiler.target>
+    <maven.compiler.source>16</maven.compiler.source>
+    <maven.compiler.target>16</maven.compiler.target>
   </properties>
   <name>Archetype - ProgramacionDos</name>
   <url>http://maven.apache.org</url>
@@ -18,4 +18,12 @@
       <url>https://jitpack.io</url>
     </repository>
   </repositories>
+
+  <dependencies>
+    <dependency>
+      <groupId>com.github.anjoismysign</groupId>
+      <artifactId>UlatinaJava</artifactId>
+      <version>1.0.16</version>
+    </dependency>
+  </dependencies>
 </project>
