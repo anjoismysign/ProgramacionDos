@@ -1,4 +1,4 @@
-package us.fiestaboleana.programaciondos.objects;
+package us.fiestaboleana.programaciondos.interfaces;
 
 public interface Displayable {
 

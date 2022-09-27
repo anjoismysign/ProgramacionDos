@@ -1,15 +1,16 @@
-package us.fiestaboleana.programaciondos.days.one;
+package us.fiestaboleana.programaciondos.days.one.entities;
 
 import us.fiestaboleana.java.libraries.PanelLib;
+import us.fiestaboleana.programaciondos.days.one.PrintType;
 
-public abstract class Persona {
+public abstract class PersonaOne {
 
     private String cedula, nombre, apellidos, direccion;
 
-    public Persona(){}
+    public PersonaOne(){}
 
-    public Persona(String cedula, String nombre,
-                   String apellidos, String direccion) {
+    public PersonaOne(String cedula, String nombre,
+                      String apellidos, String direccion) {
         this.cedula = cedula;
         this.nombre = nombre;
         this.apellidos = apellidos;

@@ -1,30 +1,31 @@
-package us.fiestaboleana.programaciondos.days.one;
+package us.fiestaboleana.programaciondos.days.one.entities;
 
 import us.fiestaboleana.java.libraries.PanelLib;
 import us.fiestaboleana.java.objects.IntegerResult;
 import us.fiestaboleana.java.swing.AnjoComponent;
 import us.fiestaboleana.java.swing.AnjoPane;
-import us.fiestaboleana.programaciondos.objects.Displayable;
+import us.fiestaboleana.programaciondos.days.one.PrintType;
+import us.fiestaboleana.programaciondos.interfaces.Displayable;
 
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Estudiante extends Persona implements Displayable {
+public class EstudianteOne extends PersonaOne implements Displayable {
 
     private String carne;
     private int cantidadMaterias, cuatrimestre;
 
-    public Estudiante() {}
+    public EstudianteOne() {}
 
-    public Estudiante(String cedula, String nombre, String apellidos, String direccion, String carnet, int cantidadMaterias, int cuatrimestre) {
+    public EstudianteOne(String cedula, String nombre, String apellidos, String direccion, String carnet, int cantidadMaterias, int cuatrimestre) {
         super(cedula, nombre, apellidos, direccion);
         this.carne = carnet;
         this.cantidadMaterias = cantidadMaterias;
         this.cuatrimestre = cuatrimestre;
     }
 
-    public static Estudiante build(){
+    public static EstudianteOne build(){
         List<AnjoComponent> components = new ArrayList<>();
         components.add(new AnjoComponent("Cedula", new JTextField(20)));
         components.add(new AnjoComponent("Nombre", new JTextField(20)));
@@ -33,7 +34,7 @@ public class Estudiante extends Persona implements Displayable {
         components.add(new AnjoComponent("Carné", new JTextField(20)));
         components.add(new AnjoComponent("Cantidad de materias", new JTextField(1)));
         components.add(new AnjoComponent("Cuatrimestre", new JTextField(1)));
-        AnjoPane pane = AnjoPane.build(components, "ESTUDIANTE - NUEVO", 0, -1);
+        AnjoPane pane = AnjoPane.build(components, "ESTUDIANTE - NUEVO", 0, null);
         String cedula = pane.getTextFieldText(0);
         String nombre = pane.getTextFieldText(1);
         String apellidos = pane.getTextFieldText(2);
@@ -49,9 +50,9 @@ public class Estudiante extends Persona implements Displayable {
                 PanelLib.showMessage("ERROR", "La cantidad de materias no es un número entero");
             if (cuatrimestreFailed)
                 PanelLib.showMessage("ERROR", "El cuatrimestre no es un número entero");
-            return Estudiante.build();
+            return EstudianteOne.build();
         }
-        return new Estudiante(cedula,nombre,apellidos,direccion, carne, cantidadMateriasResult.value(), cuatrimestreResult.value());
+        return new EstudianteOne(cedula,nombre,apellidos,direccion, carne, cantidadMateriasResult.value(), cuatrimestreResult.value());
     }
 
     public String getCarne() {

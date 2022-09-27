@@ -1,31 +1,32 @@
-package us.fiestaboleana.programaciondos.days.one;
+package us.fiestaboleana.programaciondos.days.one.entities;
 
 import us.fiestaboleana.java.libraries.PanelLib;
 import us.fiestaboleana.java.objects.DoubleResult;
 import us.fiestaboleana.java.objects.IntegerResult;
 import us.fiestaboleana.java.swing.AnjoComponent;
 import us.fiestaboleana.java.swing.AnjoPane;
-import us.fiestaboleana.programaciondos.objects.Displayable;
+import us.fiestaboleana.programaciondos.days.one.PrintType;
+import us.fiestaboleana.programaciondos.interfaces.Displayable;
 
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Profesor extends Persona implements Displayable {
+public class ProfesorOne extends PersonaOne implements Displayable {
 
     private String codigo;
     private double salario;
     private int cursosImpartidos;
 
-    public Profesor(String cedula, String nombre, String apellidos, String direccion,
-                    String codigo, double salario, int cursosImpartidos) {
+    public ProfesorOne(String cedula, String nombre, String apellidos, String direccion,
+                       String codigo, double salario, int cursosImpartidos) {
         super(cedula, nombre, apellidos, direccion);
         this.codigo = codigo;
         this.salario = salario;
         this.cursosImpartidos = cursosImpartidos;
     }
 
-    public static Profesor build(){
+    public static ProfesorOne build(){
         List<AnjoComponent> components = new ArrayList<>();
         components.add(new AnjoComponent("Cedula", new JTextField(20)));
         components.add(new AnjoComponent("Nombre", new JTextField(20)));
@@ -34,7 +35,7 @@ public class Profesor extends Persona implements Displayable {
         components.add(new AnjoComponent("Código", new JTextField(20)));
         components.add(new AnjoComponent("Salario", new JTextField(9)));
         components.add(new AnjoComponent("Cantidad de cursos", new JTextField(2)));
-        AnjoPane pane = AnjoPane.build(components, "PROFESOR - NUEVO", 0, -1);
+        AnjoPane pane = AnjoPane.build(components, "PROFESOR - NUEVO", 0, null);
         String cedula = pane.getTextFieldText(0);
         String nombre = pane.getTextFieldText(1);
         String apellidos = pane.getTextFieldText(2);
@@ -50,12 +51,12 @@ public class Profesor extends Persona implements Displayable {
                 PanelLib.showMessage("ERROR", "El salario se debe expresar como un número entero o decimal");
             if (cursosFailed)
                 PanelLib.showMessage("ERROR", "Cantidad de cursos no es un número entero");
-            return Profesor.build();
+            return ProfesorOne.build();
         }
-        return new Profesor(cedula,nombre,apellidos,direccion, codigo, salarioResult.value(), cursosResult.value());
+        return new ProfesorOne(cedula,nombre,apellidos,direccion, codigo, salarioResult.value(), cursosResult.value());
     }
 
-    public Profesor(){}
+    public ProfesorOne(){}
 
     public String getCodigo() {
         return codigo;
