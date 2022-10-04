@@ -1,9 +1,9 @@
 package us.fiestaboleana.programaciondos;
 
-import us.fiestaboleana.programaciondos.days.two.Two;
+import us.fiestaboleana.programaciondos.days.three.Three;
 
 public class ProgramacionDos {
     public static void main(String[] args) {
-        Two.run();
+        Three.run();
     }
 }
