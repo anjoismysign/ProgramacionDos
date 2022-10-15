@@ -2,13 +2,17 @@ package us.fiestaboleana.programaciondos.days.four;
 
 import us.fiestaboleana.java.swing.AnjoComponent;
 import us.fiestaboleana.java.swing.AnjoPane;
-import us.fiestaboleana.programaciondos.days.four.entities.Cliente;
-import us.fiestaboleana.programaciondos.days.four.entities.MovieGenre;
-import us.fiestaboleana.programaciondos.days.four.entities.Service;
+import us.fiestaboleana.programaciondos.days.four.entities.FourCliente;
+import us.fiestaboleana.programaciondos.days.four.entities.FourDatabaseManager;
+import us.fiestaboleana.programaciondos.days.four.entities.FourMovieGenre;
+import us.fiestaboleana.programaciondos.days.four.entities.FourService;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ItemEvent;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -16,12 +20,31 @@ import java.util.List;
 
 public class Four {
     public static void run() {
-        List<Cliente> clientes = new ArrayList<>();
-        HashMap<String, Cliente> clientesMap = new HashMap<>();
-        HashMap<MovieGenre, Integer> total = new HashMap<>();
-        Service.fillClientCollection(clientes, "¿Desea agregar otro cliente?");
+        FourDatabaseManager manager = new FourDatabaseManager();
+        HashMap<String, FourCliente> clientesMap = new HashMap<>();
+        {
+            try {
+                PreparedStatement statement = manager.getConnection().prepareStatement("select * from data");
+                ResultSet resultSet = statement.executeQuery();
+                while (resultSet.next()) {
+                    FourCliente cliente = FourDatabaseManager.fromResultSet(resultSet);
+                    clientesMap.put(cliente.fullName(), cliente);
+                }
+                resultSet.close();
+                statement.close();
+                statement.getConnection().close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        HashMap<FourMovieGenre, Integer> total = new HashMap<>();
+        FourService.fillClientMap(clientesMap, "¿Desea agregar otro cliente?", manager);
+        clientesMap.values().forEach(cliente -> {
+            System.out.println("Cliente: " + cliente.fullName());
+            manager.save(cliente);
+        });
         List<String> clientesString = new ArrayList<>();
-        clientes.parallelStream().forEach(cliente -> {
+        clientesMap.values().parallelStream().forEach(cliente -> {
             String fullName = cliente.fullName();
             clientesString.add(fullName);
             clientesMap.put(fullName, cliente);
@@ -36,7 +59,7 @@ public class Four {
                 return;
             movies.removeAllItems();
             String selected = (String) e.getItem();
-            Cliente cliente = clientesMap.get(selected);
+            FourCliente cliente = clientesMap.get(selected);
             cliente.getMovies().forEach(movie -> {
                 movies.addItem(movie.title());
             });
@@ -45,13 +68,13 @@ public class Four {
         clientesMap.get(selected).getMovies().forEach(movie -> {
             movies.addItem(movie.title());
         });
-        AnjoPane clientsPane = AnjoPane.build(Arrays.asList(new AnjoComponent("Clientes", clients),
+        AnjoPane.build(Arrays.asList(new AnjoComponent("Clientes", clients),
                         new AnjoComponent("Películas", movies)),
                 "REC - Adm.", -1, new ImageIcon("src/main/resources/rec.png").getImage().getScaledInstance(128, 128, Image.SCALE_SMOOTH));
-        AnjoPane totalPane = AnjoPane.build(Arrays.asList(new AnjoComponent("ACCIÓN", new JLabel(String.valueOf(total.get(MovieGenre.ACCION)))),
-                        new AnjoComponent("COMEDIA", new JLabel(String.valueOf(total.get(MovieGenre.COMEDIA)))),
-                        new AnjoComponent("FICCIÓN", new JLabel(String.valueOf(total.get(MovieGenre.FICCION)))),
-                        new AnjoComponent("DRAMA", new JLabel(String.valueOf(total.get(MovieGenre.DRAMA))))),
+        AnjoPane.build(Arrays.asList(new AnjoComponent("ACCIÓN", new JLabel(String.valueOf(total.get(FourMovieGenre.ACCION)))),
+                        new AnjoComponent("COMEDIA", new JLabel(String.valueOf(total.get(FourMovieGenre.COMEDIA)))),
+                        new AnjoComponent("FICCIÓN", new JLabel(String.valueOf(total.get(FourMovieGenre.FICCION)))),
+                        new AnjoComponent("DRAMA", new JLabel(String.valueOf(total.get(FourMovieGenre.DRAMA))))),
                 "REC - Total", -1, new ImageIcon("src/main/resources/rec.png").getImage().getScaledInstance(128, 128, Image.SCALE_SMOOTH));
     }
 }

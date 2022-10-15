@@ -22,7 +22,7 @@
         <dependency>
             <groupId>com.github.anjoismysign</groupId>
             <artifactId>UlatinaJava</artifactId>
-            <version>v1.0.51</version>
+            <version>v1.0.60</version>
         </dependency>
     </dependencies>
 </project>
