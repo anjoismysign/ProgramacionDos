@@ -1,9 +1,9 @@
 package us.fiestaboleana.programaciondos.days.three;
 
+import us.fiestaboleana.java.libraries.AlgorithmLib;
 import us.fiestaboleana.java.libraries.PanelLib;
 import us.fiestaboleana.programaciondos.days.three.entities.FuncionarioThree;
 import us.fiestaboleana.programaciondos.days.three.entities.UberDouble;
-import us.fiestaboleana.programaciondos.libs.AlgorithmLibTwo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,7 @@ public class Three {
     public static void run() {
         List<FuncionarioThree> funcionarios = new ArrayList<>();
         UberDouble avg = new UberDouble(0);
-        AlgorithmLibTwo.dynamicRun(() -> {
+        AlgorithmLib.dynamicRun(() -> {
             funcionarios.add(FuncionarioThree.build());
         }, "FUNCIONARIO", "¿Desea agregar otro funcionario?");
         funcionarios.forEach(funcionario -> {
