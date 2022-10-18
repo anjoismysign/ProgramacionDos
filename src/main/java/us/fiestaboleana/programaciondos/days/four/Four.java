@@ -28,6 +28,8 @@ public class Four {
                 ResultSet resultSet = statement.executeQuery();
                 while (resultSet.next()) {
                     FourCliente cliente = FourDatabaseManager.fromResultSet(resultSet);
+                    if (cliente == null)
+                        return;
                     clientesMap.put(cliente.fullName(), cliente);
                 }
                 resultSet.close();
