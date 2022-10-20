@@ -1,9 +1,9 @@
 package us.fiestaboleana.programaciondos;
 
-import us.fiestaboleana.programaciondos.tests.one.TestOne;
+import us.fiestaboleana.programaciondos.carry.Carry;
 
 public class ProgramacionDos {
     public static void main(String[] args) {
-        TestOne.run();
+        Carry.run();
     }
 }
